@@ -18,10 +18,10 @@ Trabajado en el VPS en /home/benny/CrystalOTC (NO en mazatleraot, solo se mandar
 
 ## Que se cambio para MazatleraOT (init.lua)
 - Nombre: MazatleraOT / mazatleraot / MazatleraOT
-- Login: https://tibiaserver.com/login.php, port 443, protocol 1525, httpLogin = true
+- Login: https://mazatleraot.com/login.php, port 443, protocol 1525, httpLogin = true
 - Techo de version: setLastSupportedVersion(1530) se deja, permite 1525
   y una futura subida a 15.30.
-- Website en entergame.otmod: https://tibiaserver.com
+- Website en entergame.otmod: https://mazatleraot.com
 
 ## Assets que FALTAN (no vienen en el repo)
 - Assets 1525 INSTALADOS (2026-11-06): data/things/1525/ con 6,031
@@ -43,7 +43,7 @@ Trabajado en el VPS en /home/benny/CrystalOTC (NO en mazatleraot, solo se mandar
 - Vulkan es solo Windows; en Linux usa OpenGL (CMake/Dockerfile en el repo).
 
 ## Server
-- MazatleraOT: tibiaserver.com, juego 7171/7172, web https://tibiaserver.com/
+- MazatleraOT: mazatleraot.com, juego 7171/7172, web https://mazatleraot.com/
 - Si el server se sube a 15.30 en el futuro, cambiar protocol = 1530 en
   init.lua y poner assets data/things/1530/.
 

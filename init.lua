@@ -53,7 +53,7 @@ if ENABLE_SERVERS then
     -- release endpoint. Release (no flag) = the production login below.
     if g_resources.fileExists("/devserver.flag") then
         Servers_init = {
-            ["https://tibiaserver.com/login.php"] = {
+            ["https://mazatleraot.com/login.php"] = {
                 port = 443,
                 protocol = 1525,
                 httpLogin = true,
@@ -62,7 +62,7 @@ if ENABLE_SERVERS then
         }
     else
         Servers_init = {
-            ["https://tibiaserver.com/login.php"] = {
+            ["https://mazatleraot.com/login.php"] = {
                 port = 443,
                 protocol = 1525,
                 httpLogin = true,
