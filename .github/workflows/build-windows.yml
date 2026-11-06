@@ -114,19 +114,26 @@ jobs:
           $artifactDir = "$env:GITHUB_WORKSPACE\artifacts"
           New-Item -ItemType Directory -Force -Path $artifactDir | Out-Null
 
-          # MazatleraOT: el cliente real es otclient.exe (build/windows-release).
+          # MazatleraOT: el cliente real es otclient.exe.
           # NUNCA usar "otclient*.exe" con -First 1: con OTCLIENT_BUILD_TESTS=ON
           # el primer match era otclient_map_spectator_tests.exe (GoogleTest) y
           # se publicaba como CrystalOTC.exe. Los tests quedan desactivados en
           # el preset windows-release (OTCLIENT_BUILD_TESTS=OFF) y ademas se
           # exige el nombre exacto del exe del cliente.
-          $exePath = Get-ChildItem -Path "$env:GITHUB_WORKSPACE\build\windows-release" -Filter "otclient.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
+          # OJO ubicacion real: src/CMakeLists.txt pone RUNTIME_OUTPUT_DIRECTORY
+          # en ${CMAKE_SOURCE_DIR}/, o sea la RAIZ del repo (el log de build lo
+          # confirma: "Linking CXX executable D:\a\MazatleraOTC\MazatleraOTC\otclient.exe").
+          # NO esta en build/windows-release.
+          $exePath = Get-ChildItem -Path $env:GITHUB_WORKSPACE -Filter "otclient.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
+          if (-not $exePath) {
+            $exePath = Get-ChildItem -Path "$env:GITHUB_WORKSPACE\build\windows-release" -Filter "otclient.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
+          }
           if (-not $exePath) {
             $exePath = Get-ChildItem -Recurse -Path "$env:GITHUB_WORKSPACE\build" -Filter "otclient.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
           }
 
           if (-not $exePath) {
-            Write-Error "otclient.exe (cliente real) not found in build/windows-release!"
+            Write-Error "otclient.exe (cliente real) not found in repo root or build/windows-release!"
             exit 1
           }
           if ($exePath.Name -ne "otclient.exe") {
