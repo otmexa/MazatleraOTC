@@ -598,7 +598,7 @@ void ProtocolGame::sendTalk(const Otc::MessageMode mode, const uint16_t channelI
 
     msg->addString(message);
 
-    if (g_game.getClientVersion() >= 1530) {
+    if (g_game.getClientVersion() >= 1525) {
         // 15.25 say tail: [aimMode u8]; if != 0: [x u16][y u16][z u8][seq u8].
         // Used by needPosition (crosshair) spells; harmless on plain chat (cleared per say).
         if (talkAimPos.isValid()) {
@@ -678,7 +678,7 @@ void ProtocolGame::sendChangeFightModes(const Otc::FightModes fightMode, const O
 {
     const auto& msg = std::make_shared<OutputMessage>();
     msg->addU8(Proto::ClientChangeFightModes);
-    if (g_game.getClientVersion() >= 1530) {
+    if (g_game.getClientVersion() >= 1525) {
         // 15.25: fight mode byte removed; wire = [chase][secure][pvpMode][junk]
         msg->addU8(chaseMode);
         msg->addU8(safeFight);
