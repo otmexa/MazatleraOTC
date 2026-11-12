@@ -32,7 +32,7 @@ jobs:
     runs-on: windows-2022
 
     concurrency:
-      group: crystalotc-${{ github.workflow }}-${{ github.ref }}
+      group: mazatleraotc-${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
 
     steps:
@@ -117,7 +117,7 @@ jobs:
           # MazatleraOT: el cliente real es otclient.exe.
           # NUNCA usar "otclient*.exe" con -First 1: con OTCLIENT_BUILD_TESTS=ON
           # el primer match era otclient_map_spectator_tests.exe (GoogleTest) y
-          # se publicaba como CrystalOTC.exe. Los tests quedan desactivados en
+          # se publicaba como MazatleraOTC.exe. Los tests quedan desactivados en
           # el preset windows-release (OTCLIENT_BUILD_TESTS=OFF) y ademas se
           # exige el nombre exacto del exe del cliente.
           # OJO ubicacion real: src/CMakeLists.txt pone RUNTIME_OUTPUT_DIRECTORY
@@ -141,7 +141,7 @@ jobs:
             exit 1
           }
 
-          Copy-Item $exePath.FullName -Destination "$artifactDir\CrystalOTC.exe"
+          Copy-Item $exePath.FullName -Destination "$artifactDir\MazatleraOTC.exe"
 
           $dlls = Get-ChildItem -Path $exePath.Directory.FullName -Filter "*.dll"
           foreach ($dll in $dlls) {
@@ -161,7 +161,7 @@ jobs:
       - name: Upload executable artifact
         uses: actions/upload-artifact@v4
         with:
-          name: CrystalOTC-windows-release
+          name: MazatleraOTC-windows-release
           path: ${{ github.workspace }}/artifacts
 
   release:
@@ -176,18 +176,18 @@ jobs:
       - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
-          name: CrystalOTC-windows-release
+          name: MazatleraOTC-windows-release
           path: artifacts
 
       - name: Zip binaries
-        run: cd artifacts && zip -r ../CrystalOTC-windows.zip .
+        run: cd artifacts && zip -r ../MazatleraOTC-windows.zip .
 
       - name: Recreate "latest" release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release delete latest -R "$GITHUB_REPOSITORY" --cleanup-tag --yes || true
-          gh release create latest CrystalOTC-windows.zip \
+          gh release create latest MazatleraOTC-windows.zip \
             -R "$GITHUB_REPOSITORY" \
             --target "$GITHUB_SHA" \
             --prerelease \
