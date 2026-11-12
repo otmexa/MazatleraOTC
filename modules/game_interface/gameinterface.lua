@@ -104,8 +104,7 @@ function init()
 	gameMapPanel = gameRootPanel:getChildById("gameMapPanel")
 
 	function gameMapPanel.onMouseWheel(widget, mousePos, direction)
-		requestSmoothZoom(direction == MouseWheelUp and -2 or 2)
-
+		-- Mouse wheel zoom disabled on the game view (MazatleraOT); use Ctrl+= / Ctrl+- to zoom.
 		return true
 	end
 
